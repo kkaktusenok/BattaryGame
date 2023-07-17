@@ -27,6 +27,19 @@ public:
 	void MoveRight(float Axis);
 
 	bool bDead;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float Power;
+
+	UPROPERTY(EditAnywhere)
+	float Power_Treshold;
+
+	UFUNCTION()
+	void OnBeginOverlap(
+		UPrimitiveComponent* HitComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult & HitResult);
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
