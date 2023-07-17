@@ -39,6 +39,10 @@ public:
 		UPrimitiveComponent* HitComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult & HitResult);
+
+	UPROPERTY(EditAnywhere,Category="UI HUD")
+	TSubclassOf<UUserWidget> PlayerPowerWidgetClass;
+	UUserWidget* PlayerPowerWidget;
 	
 protected:
 	// Called when the game starts or when spawned

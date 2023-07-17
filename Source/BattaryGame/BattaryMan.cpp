@@ -3,6 +3,7 @@
 
 #include "BattaryMan.h"
 
+#include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -41,12 +42,20 @@ void ABattaryMan::BeginPlay()
 {
 	Super::BeginPlay();
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this,&ABattaryMan::OnBeginOverlap);
+
+	if (PlayerPowerWidgetClass != nullptr)
+	{
+		PlayerPowerWidget = CreateWidget(GetWorld(), PlayerPowerWidgetClass);
+		PlayerPowerWidget->AddToViewport();
+	}
 }
 
 // Called every frame
 void ABattaryMan::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	Power -= DeltaTime * Power_Treshold;
 }
 
 // Called to bind functionality to input
