@@ -43,7 +43,8 @@ public:
 	UPROPERTY(EditAnywhere,Category="UI HUD")
 	TSubclassOf<UUserWidget> PlayerPowerWidgetClass;
 	UUserWidget* PlayerPowerWidget;
-	
+
+	void RestartGame();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

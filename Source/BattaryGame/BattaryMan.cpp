@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABattaryMan::ABattaryMan()
@@ -56,6 +57,18 @@ void ABattaryMan::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	Power -= DeltaTime * Power_Treshold;
+
+	if (Power <= 0)
+	{
+		if(!bDead)
+		{
+			bDead = true;
+			GetMesh()->SetSimulatePhysics(true);
+
+			FTimerHandle UnusedHandle;
+			GetWorldTimerManager().SetTimer(UnusedHandle,this,&ABattaryMan::RestartGame,3.f,false);
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -107,4 +120,10 @@ void ABattaryMan::OnBeginOverlap(UPrimitiveComponent* HitComponent, AActor* Othe
 		
 		OtherActor->Destroy();
 	}
+}
+
+
+void ABattaryMan::RestartGame()
+{
+	UGameplayStatics::OpenLevel(this, FName(*GetName()),false);
 }
